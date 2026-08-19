@@ -85,6 +85,10 @@ type AppContextValue = {
   deleteRisk: (id: string) => void;
   // survey
   addSurvey: (s: Omit<Survey, "id">) => void;
+  // reports
+  addReport: (r: { title: string; type?: Report["type"]; period?: string; status?: Report["status"]; summary?: string }) => void;
+  updateReport: (id: string, patch: Partial<Report>) => void;
+  deleteReport: (id: string) => void;
   updateSurvey: (id: string, patch: Partial<Survey>) => void;
   deleteSurvey: (id: string) => void;
   // notifications
@@ -334,6 +338,47 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     [surveys, pushActivity, toast]
   );
 
+  /* report CRUD ------------------------------------------------------ */
+  const addReport = useCallback(
+    (r: { title: string; type?: Report["type"]; period?: string; status?: Report["status"]; summary?: string }) => {
+      const report: Report = {
+        id: uid("rep"),
+        title: r.title,
+        type: r.type ?? "Board",
+        period: r.period ?? "Q4 2025",
+        status: r.status ?? "Draft",
+        authorId: CURRENT_USER_ID,
+        date: new Date().toISOString().slice(0, 10),
+        pages: 6,
+        summary: r.summary ?? "",
+        sections: [
+          { heading: "Executive summary", body: "Draft section. Use AI to generate the narrative from live plan data." },
+          { heading: "Goals at a glance", bullets: ["Section to be generated"] },
+        ],
+      };
+      setReports((prev) => [report, ...prev]);
+      pushActivity({ verb: "drafted", target: `report \u201c${report.title}\u201d`, type: "report" });
+      toast({ title: "Report drafted", description: `\u201c${report.title}\u201d was added as a draft.`, variant: "success" });
+    },
+    [pushActivity, toast]
+  );
+
+  const updateReport = useCallback((id: string, patch: Partial<Report>) => {
+    setReports((prev) => prev.map((r) => (r.id === id ? { ...r, ...patch } : r)));
+  }, []);
+
+  const deleteReport = useCallback(
+    (id: string) => {
+      const report = reports.find((r) => r.id === id);
+      setReports((prev) => prev.filter((r) => r.id !== id));
+      if (report) {
+        pushActivity({ verb: "deleted", target: `report \u201c${report.title}\u201d`, type: "report" });
+        toast({ title: "Report deleted", description: `\u201c${report.title}\u201d was removed.`, variant: "info" });
+      }
+    },
+    [reports, pushActivity, toast]
+  );
+
   /* notifications ---------------------------------------------------- */
   const markNotificationRead = useCallback((id: string) => {
     setNotifications((prev) =>
@@ -420,6 +465,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       addSurvey,
       updateSurvey,
       deleteSurvey,
+      addReport,
+      updateReport,
+      deleteReport,
       markNotificationRead,
       markAllNotificationsRead,
       clearNotifications,
@@ -457,6 +505,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       addSurvey,
       updateSurvey,
       deleteSurvey,
+      addReport,
+      updateReport,
+      deleteReport,
       markNotificationRead,
       markAllNotificationsRead,
       clearNotifications,
