@@ -1,0 +1,13 @@
+--- a/src/components/shell.tsx
++++ b/src/components/shell.tsx
+@@ -361 +361 @@ export function Shell({ children }: { children: React.ReactNode }) {
+-  const { org, user, theme, toggleTheme } = useApp();
++  const { org, user, theme, toggleTheme, toast } = useApp();
+@@ -500 +500 @@
+-          <aside className="absolute left-0 top-0 h-full w-[272px] animate-slide-in-right-rev bg-white shadow-2xl dark:bg-stone-900" style={{ animationName: "none" }}>
++          <aside className="absolute left-0 top-0 h-full w-[272px] animate-fade-in bg-white shadow-2xl dark:bg-stone-900">
+@@ -597,2 +597,2 @@
+-                      setUserMenuOpen(false);
+-                      useApp; // no-op to satisfy lint
++                      setUserMenuOpen(false);
++                      toast({ title: "Demo mode", description: "Sign-out is disabled in this prototype — there's no auth.", variant: "info" });
