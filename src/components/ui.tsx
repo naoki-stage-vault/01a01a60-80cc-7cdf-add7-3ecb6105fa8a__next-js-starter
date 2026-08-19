@@ -1149,3 +1149,42 @@ export function Kbd({ children }: { children: React.ReactNode }) {
     </kbd>
   );
 }
+
+/* ------------------------------------------------------------------ */
+/* Toggle switch (alias of Switch)                                    */
+/* ------------------------------------------------------------------ */
+
+export function Toggle({
+  on,
+  onChange,
+  label,
+  disabled,
+}: {
+  on: boolean;
+  onChange: (v: boolean) => void;
+  label?: string;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={on}
+      aria-label={label}
+      disabled={disabled}
+      onClick={() => onChange(!on)}
+      className={cn(
+        "relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40 disabled:opacity-50",
+        on ? "bg-emerald-600" : "bg-stone-300 dark:bg-stone-600"
+      )}
+    >
+      <span
+        className={cn(
+          "inline-block h-4.5 w-4.5 transform rounded-full bg-white shadow transition-transform",
+          on ? "translate-x-[22px]" : "translate-x-[3px]"
+        )}
+        style={{ height: 18, width: 18 }}
+      />
+    </button>
+  );
+}

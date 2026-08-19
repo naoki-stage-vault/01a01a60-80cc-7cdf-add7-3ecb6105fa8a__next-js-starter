@@ -38,6 +38,7 @@ import type {
   Report,
   Risk,
   Survey,
+  User,
 } from "./types";
 import { cn, uid } from "./utils";
 
@@ -85,6 +86,8 @@ type AppContextValue = {
   deleteRisk: (id: string) => void;
   // survey
   addSurvey: (s: Omit<Survey, "id">) => void;
+  updateProfile: (patch: { name?: string; title?: string; email?: string }) => void;
+  updateOrg: (patch: Partial<Pick<Org, "name" | "sector" | "mission">>) => void;
   // reports
   addReport: (r: { title: string; type?: Report["type"]; period?: string; status?: Report["status"]; summary?: string }) => void;
   updateReport: (id: string, patch: Partial<Report>) => void;
@@ -141,8 +144,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [reports, setReports] = useState<Report[]>(REPORTS);
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  const org = useMemo(() => ORGS.find((o) => o.id === orgId) ?? ORGS[0]!, [orgId]);
-  const user = useMemo(() => userById(CURRENT_USER_ID), []);
+  const [user, setUser] = useState<User>(() => userById(CURRENT_USER_ID));
+  const [org, setOrg] = useState<Org>(() => ORGS.find((o) => o.id === orgId) ?? ORGS[0]!);
 
   /* theme ------------------------------------------------------------ */
   useEffect(() => {
@@ -178,6 +181,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const switchOrg = useCallback(
     (id: string) => {
       setOrgId(id);
+      setOrg(ORGS.find((o) => o.id === id) ?? ORGS[0]!);
       toast({
         title: `Switched workspace`,
         description: `You are now viewing ${ORGS.find((o) => o.id === id)?.name}.`,
@@ -338,6 +342,21 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     [surveys, pushActivity, toast]
   );
 
+  /* profile & org -------------------------------------------------- */
+  const updateProfile = useCallback(
+    (patch: { name?: string; title?: string; email?: string }) => {
+      setUser((prev) => ({ ...prev, ...patch }));
+    },
+    []
+  );
+
+  const updateOrg = useCallback(
+    (patch: Partial<Pick<Org, "name" | "sector" | "mission">>) => {
+      setOrg((prev) => ({ ...prev, ...patch }));
+    },
+    []
+  );
+
   /* report CRUD ------------------------------------------------------ */
   const addReport = useCallback(
     (r: { title: string; type?: Report["type"]; period?: string; status?: Report["status"]; summary?: string }) => {
@@ -465,6 +484,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       addSurvey,
       updateSurvey,
       deleteSurvey,
+      updateProfile,
+      updateOrg,
       addReport,
       updateReport,
       deleteReport,

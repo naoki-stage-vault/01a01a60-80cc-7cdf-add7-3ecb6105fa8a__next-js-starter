@@ -306,7 +306,7 @@ export default function RisksPage() {
                       <Td>
                         <TrendIcon trend={r.trend} />
                       </Td>
-                      <Td onClick={(e) => e.stopPropagation()}>
+                      <Td><div onClick={(e) => e.stopPropagation()}>
                         <Menu
                           trigger={
                             <Button variant="outline" size="icon" aria-label="Risk actions">
@@ -321,7 +321,7 @@ export default function RisksPage() {
                             { label: "Delete", icon: <IconTrash size={14} />, danger: true, onClick: () => setDeleteId(r.id) },
                           ]}
                         />
-                      </Td>
+                      </div></Td>
                     </tr>
                   );
                 })}

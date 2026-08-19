@@ -19,6 +19,7 @@ export type Org = {
   initials: string;
   color: string;
   planPeriod: string;
+  mission: string;
 };
 
 export type Status =
@@ -155,7 +156,7 @@ export type Report = {
   date: string;
   pages: number;
   summary: string;
-  sections: { heading: string; body: string; bullets?: string[] }[];
+  sections: { heading: string; body?: string; bullets?: string[] }[];
 };
 
 export type NotificationItem = {

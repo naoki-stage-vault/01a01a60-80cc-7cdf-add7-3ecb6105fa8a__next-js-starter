@@ -18,7 +18,7 @@ import {
 } from "@/components/ui";
 import { BarChart, Legend, LineChart } from "@/components/charts";
 import { IconArrowRight, IconCalendar, IconFlag, IconTarget, IconTrendingUp } from "@/lib/icons";
-import { cn, daysUntil, formatDate, formatPercent, monthShort } from "@/lib/utils";
+import { cn, daysUntil, formatDate, formatPercent } from "@/lib/utils";
 import type { Status } from "@/lib/types";
 
 export default function ProgressPage() {

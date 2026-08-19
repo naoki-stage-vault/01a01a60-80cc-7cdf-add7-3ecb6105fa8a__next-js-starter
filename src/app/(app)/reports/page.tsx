@@ -15,6 +15,7 @@ import {
   EmptyState,
   Field,
   Input,
+  Menu,
   Modal,
   PageHeader,
   SearchInput,
@@ -65,7 +66,7 @@ export default function ReportsPage() {
     return list;
   }, [reports, tab, q, sortNewest]);
 
-  const preview = previewId ? reports.find((r) => r.id === previewId) : null;
+  const preview = (previewId ? reports.find((r) => r.id === previewId) : null) ?? null;
 
   return (
     <div className="space-y-6 animate-fade-in">

@@ -497,7 +497,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       {sidebarOpen && (
         <div className="fixed inset-0 z-[70] lg:hidden">
           <div className="absolute inset-0 animate-fade-in bg-stone-950/40" onClick={() => setSidebarOpen(false)} />
-          <aside className="absolute left-0 top-0 h-full w-[272px] animate-fade-in bg-white shadow-2xl dark:bg-stone-900>
+          <aside className="absolute left-0 top-0 h-full w-[272px] animate-fade-in bg-white shadow-2xl dark:bg-stone-900">
             <button
               onClick={() => setSidebarOpen(false)}
               className="absolute right-3 top-4 rounded-lg p-1.5 text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800"

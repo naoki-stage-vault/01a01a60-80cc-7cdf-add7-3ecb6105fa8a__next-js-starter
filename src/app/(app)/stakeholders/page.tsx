@@ -78,7 +78,7 @@ export default function StakeholdersPage() {
     return { responses, avgSentiment, participation, active: surveys.filter((s) => s.status === "Published" || s.status === "Analyzing").length };
   }, [surveys, groups]);
 
-  const survey = surveyId ? surveys.find((s) => s.id === surveyId) : null;
+  const survey = (surveyId ? surveys.find((s) => s.id === surveyId) : null) ?? null;
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -324,10 +324,6 @@ export default function StakeholdersPage() {
       />
     </div>
   );
-}
-
-function groupById(id: string) {
-  return STAKEHOLDER_GROUPS.find((g) => g.id === id) ?? STAKEHOLDER_GROUPS[0]!;
 }
 
 function initialsOf(name: string) {

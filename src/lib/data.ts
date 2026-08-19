@@ -46,6 +46,7 @@ export const ORGS: Org[] = [
     initials: "GF",
     color: "bg-emerald-600",
     planPeriod: "2025 – 2027",
+  mission: "To restore healthy ecosystems and create green jobs in underserved urban communities.",
   },
   {
     id: "org-hope",
@@ -58,6 +59,7 @@ export const ORGS: Org[] = [
     initials: "HY",
     color: "bg-sky-600",
     planPeriod: "2025 – 2027",
+  mission: "To equip every young person with the mentors, skills and opportunities they need to thrive.",
   },
   {
     id: "org-community",
@@ -70,6 +72,7 @@ export const ORGS: Org[] = [
     initials: "CF",
     color: "bg-amber-600",
     planPeriod: "2025 – 2028",
+  mission: "To strengthen neighborhoods through resident-led programs, affordable housing and civic participation.",
   },
   {
     id: "org-bright",
@@ -82,6 +85,7 @@ export const ORGS: Org[] = [
     initials: "BM",
     color: "bg-violet-600",
     planPeriod: "2025 – 2026",
+    mission: "To make excellent, joyful education accessible to every child regardless of zip code.",
   },
   {
     id: "org-clean",
@@ -94,6 +98,7 @@ export const ORGS: Org[] = [
     initials: "CO",
     color: "bg-cyan-600",
     planPeriod: "2025 – 2030",
+    mission: "To protect ocean health and coastal communities through cleanup, policy and education.",
   },
 ];
 
@@ -609,6 +614,10 @@ export function initiativesByGoal(goalId: string): Initiative[] {
 
 export function initiativeById(id: string): Initiative | undefined {
   return INITIATIVES.find((i) => i.id === id);
+}
+
+export function groupById(id: string): StakeholderGroup {
+  return STAKEHOLDER_GROUPS.find((g) => g.id === id) ?? STAKEHOLDER_GROUPS[0]!;
 }
 
 /* ------------------------------------------------------------------ */
